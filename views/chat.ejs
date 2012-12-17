@@ -15,7 +15,7 @@
   <script>
       $(function() {
           // create socket to realtime chat server
-          var socket = io.connect('http://127.0.0.1:3000/chat');
+          var socket = io.connect('<%= ws %>/chat');
         
           // successfully registered our name with the chat server
           socket.on('ready', function() {

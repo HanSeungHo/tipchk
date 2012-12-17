@@ -33,26 +33,27 @@ var SOCKET = {
   PORT: 9000
 }
 
+var ws = 'http://rinker.kr:3000'
 app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
 //Route 
 app.get('/', function(req,res) {
-    res.render('index', { title: 'Express' });
+    res.render('index', { title: 'Express', ws: ws });
 });
 
 app.get('/chat', function(req,res) {
-    res.render('chat', { title: 'Express' });
+    res.render('chat', { title: 'Express', ws: ws });
 });
 
 
 app.get('/game', function(req,res) {
-    res.render('game', { title: 'Express' });
+    res.render('game', { title: 'Express', ws: ws });
 });
 
 app.get('/room', function(req,res) {
-    res.render('index', { title: 'Express' });
+    res.render('index', { title: 'Express', ws: ws});
 });
 
 app.get('/play', function(req,res) {
