@@ -1,0 +1,106 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+  <title>Tip!Chk!</title> 
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1"> 
+
+  <link rel="stylesheet" href="/jqm/jquery.mobile-1.2.0.min.css" />
+  <link rel="stylesheet" href="/css/style.css" />  
+  <script src="/jqm/jquery-1.8.3.min.js"></script>
+  <script src="/jqm/jquery.mobile-1.2.0.min.js"></script>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io.connect('http://127.0.0.1:3000');
+    // socket.on('news', function (data) {
+    //   console.log(data);
+    //   socket.emit('my other event', { my: 'data' });
+    // });
+  </script>
+  <script src="/js/join.js"></script>  
+</head> 
+<body> 
+
+<!-- Start of first page: #one -->
+<div data-role="page" id="join">
+
+  <div data-role="header">
+    <h1>Network programing</h1>
+  </div><!-- /header -->
+
+  <div data-role="content"> 
+    <p><img id="Logo" src="/img/logo.png"> </a></p>   
+    <label for="basic">이름:</label>
+    <input type="text" name="name" id="name" value=""  />
+    <a id="Login" href="#room" class="play" data-role="button" data-icon="arrow-r" data-theme="b" data-iconpos="right">게임 시작</a>
+    <a href="#help" data-role="button" data-icon="info" data-iconpos="right">도움말</a>
+  </div><!-- /content -->
+
+  <div data-role="footer">
+    <h4>Copyright@Tep!Chk!</h4>
+  </div><!-- /footer -->
+</div><!-- /page -->
+
+
+<!-- Start of room page: #room -->
+<div data-role="page" id="room">
+
+  <div data-role="header">
+    <h1>Game Room</h1>
+  </div><!-- /header -->
+
+  <div data-role="content">  
+    <h2>게임을 선택하세요</h2>
+    <p><a id="user" href="#join" data-direction="reverse" data-role="button" data-iconpos="right">이름 변경</a></p> 
+    <ul data-role="listview" class="ui-listview">
+      <li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-up-c ui-btn-icon-right ui-li-has-arrow ui-li">
+        <div class="ui-btn-inner ui-li"><div class="ui-btn-text">
+          <a href="/play" class="ui-link-inherit">
+            <h3 class="ui-li-heading">스피드 계산1</h3>
+            <p class="ui-li-desc">누가 누가 빨리 계산을 풀까~?</p></a></div>
+            <span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>
+      <li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-up-c ui-btn-icon-right ui-li-has-arrow ui-li">
+        <div class="ui-btn-inner ui-li"><div class="ui-btn-text">
+          <a href="#" class="ui-link-inherit">
+            <h3 class="ui-li-heading">스피드 계산2</h3>
+            <p class="ui-li-desc">누가 누가 빨리 계산을 풀까~?</p></a></div>
+            <span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>
+      <li data-corners="false" data-shadow="false" data-iconshadow="true" data-wrapperels="div" data-icon="arrow-r" data-iconpos="right" data-theme="c" class="ui-btn ui-btn-up-c ui-btn-icon-right ui-li-has-arrow ui-li">
+        <div class="ui-btn-inner ui-li"><div class="ui-btn-text">
+          <a href="#" class="ui-link-inherit">
+            <h3 class="ui-li-heading">스피드 퀴즈</h3>
+            <p class="ui-li-desc">상식 퀴즈 게임!</p></a></div>
+            <span class="ui-icon ui-icon-arrow-r ui-icon-shadow">&nbsp;</span></div></li>            
+    </ul>    
+<!--     <ul data-role="listview">
+      <li><a href="/play">스피드 게임</a></li>
+      <li><a href="audi.html">스피드 퀴즈</a></li>
+      <li><a href="bmw.html">업 앤 다</a></li>
+    </ul> -->
+    
+  </div><!-- /content -->
+  
+</div><!-- /page two -->
+
+
+<!-- Start of help page: #help -->
+<div data-role="page" id="help">
+
+  <div data-role="header">
+    <h1>Help</h1>
+  </div><!-- /header -->
+
+  <div data-role="content">  
+    <h2>Tep!Chk</h2>
+    <p>간단하게 즐길 수 있는 네트워크 게임입니다.</p> 
+    <p>친구와 함께 같 접속해서 게임을 즐기세요.</p>  
+    <p><a href="#join" data-direction="reverse" data-role="button" data-icon="arrow-l">뒤로가기</a></p> 
+    
+  </div><!-- /content -->
+  
+</div><!-- /page two -->
+
+
+</body>
+</html>
