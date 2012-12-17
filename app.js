@@ -29,11 +29,13 @@ app.configure(function(){
 // Tcp sokcet setting
 var SOCKET = {
   //HOST: '192.168.0.15',
-  HOST: '10.211.55.3',  
+  HOST: '20.211.55.3',  
   PORT: 9000
 }
 
-var ws = 'http://rinker.kr:3000'
+var ws = 'http://127.0.0.1:3000';
+
+//var ws = 'http://rinker.kr:3000';
 app.configure('development', function(){
   app.use(express.errorHandler());
 });
@@ -169,16 +171,15 @@ var game = io.of('/game').on('connection', function(socket) {
 
   // // client has sent a new change message
   // socket.on('start', function(message) {
-
   //   socket.broadcast.emit('message', { 
   //       from: '퀴즈',
   //       message: '게임을 시작합니다' 
   //   });
-
   // });   
 
   // client has sent a new change message
   socket.on('message', function(message) {
+
     // get name associated with this socket
     socket.get('name', function(error, name) {
       // send message to all chat participants
@@ -192,40 +193,7 @@ var game = io.of('/game').on('connection', function(socket) {
 
 });
 
-
-// var joined = false;
-// var room = io.connect('/room');
-// var content = $('#room-content');
-// room.on('connect', function() {
-//   $('#room-form').css('display', 'block');
-//   content.append($('<p>').text('Connected'));
-// }); 
- 
-// room.on('joined', function(msg) {
-//   content.append($('<p>').text(msg)
-//          .append($('<em>').text(' from server')));
-// });
- 
-// room.on('message', function(msg) {
-//   content.append($('<p>').text(msg)
-//          .append($('<em>').text(' from server')));
-// });
- 
-// $('#room-join').click(function(e) {
-//   joined = true;
-//   room.emit('join room', $('#room-select').val());
-// });
- 
-// $('#room-form').submit(function(e) {
-//   var textObj = $('#room-text');
-//   var msg = textObj.val();
-//   textObj.val('');
-//   content.append($('<p>').text(msg)
-//          .append($('<em>').text(' from me')));
-//   room.emit('fromclient', msg);
-// });
-
-// Socket.io 
+// Socket.io
 
 var client = new net.Socket();
 client.connect(SOCKET.PORT, SOCKET.HOST, function() {
@@ -236,7 +204,7 @@ client.connect(SOCKET.PORT, SOCKET.HOST, function() {
 
 // Add a 'data' event handler for the client socket
 // data is what the server sent to this socket
-client.on('data', function(data) {
+  client.on('data', function(data) {
     
   console.log('DATA: ' + data);
   // Close the client socket completely
@@ -245,7 +213,7 @@ client.on('data', function(data) {
 });
 
 
-// Test
+// Console Test
 
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
