@@ -28,7 +28,8 @@ app.configure(function(){
 
 // Tcp sokcet setting
 var SOCKET = {
-  HOST: '192.168.0.15',
+  //HOST: '192.168.0.15',
+  HOST: '10.211.55.3',  
   PORT: 9000
 }
 
@@ -43,6 +44,11 @@ app.get('/', function(req,res) {
 
 app.get('/chat', function(req,res) {
     res.render('chat', { title: 'Express' });
+});
+
+
+app.get('/game', function(req,res) {
+    res.render('game', { title: 'Express' });
 });
 
 app.get('/room', function(req,res) {
@@ -96,33 +102,33 @@ io.sockets.on('connection', function(client) {
 });
 
 //Game Sokcet.io
-var Room = io
-  .of('/game')
-  .on('connection', function(socket) {
+// var Room = io
+//   .of('/game')
+//   .on('connection', function(socket) {
 
     
-    socket.emit('test', 'test');
-    //console.log('Connect to game');
-    var joinedRoom = null;
-    socket.on('join room', function(data) {
-      console.log(data);
-      socket.join(data);
-      joinedRoom = data;
-      socket.emit('joined', "you've joined " + data);
-      socket.broadcast.to(joinedRoom)
-                         .send('someone joined room');
-    });
-    socket.on('fromclient', function(data) {
-      if (joinedRoom) {
-        socket.broadcast.to(joinedRoom).send(data);
-      } else {
-        socket.send(
-           "you're not joined a room." +
-           "select a room and then push join."
-        );
-      }
-    });
-});
+//     socket.emit('test', 'test');
+//     //console.log('Connect to game');
+//     var joinedRoom = null;
+//     socket.on('join room', function(data) {
+//       console.log(data);
+//       socket.join(data);
+//       joinedRoom = data;
+//       socket.emit('joined', "you've joined " + data);
+//       socket.broadcast.to(joinedRoom)
+//                          .send('someone joined room');
+//     });
+//     socket.on('fromclient', function(data) {
+//       if (joinedRoom) {
+//         socket.broadcast.to(joinedRoom).send(data);
+//       } else {
+//         socket.send(
+//            "you're not joined a room." +
+//            "select a room and then push join."
+//         );
+//       }
+//     });
+// });
 
 
 // create socket namespace for the chat room
@@ -146,6 +152,43 @@ var chat = io.of('/chat').on('connection', function(socket) {
       });
     });
   });
+});
+
+
+// create socket namespace for the chat room
+var game = io.of('/game').on('connection', function(socket) {
+  console.log('Game socket.io')
+  // new client has joined the chat
+    socket.set('name', app.session.user, function() {
+      // inform client we're ready
+      console.log('join')
+      socket.emit('ready');
+
+    });
+
+  // // client has sent a new change message
+  // socket.on('start', function(message) {
+
+  //   socket.broadcast.emit('message', { 
+  //       from: '퀴즈',
+  //       message: '게임을 시작합니다' 
+  //   });
+
+  // });   
+
+  // client has sent a new change message
+  socket.on('message', function(message) {
+    // get name associated with this socket
+    socket.get('name', function(error, name) {
+      // send message to all chat participants
+      socket.broadcast.emit('message', { 
+        from: app.session.user,
+        message: message 
+      });
+    });
+  });
+
+
 });
 
 
@@ -183,40 +226,40 @@ var chat = io.of('/chat').on('connection', function(socket) {
 
 // Socket.io 
 
-// var client = new net.Socket();
-// client.connect(SOCKET.PORT, SOCKET.HOST, function() {
-//     console.log('CONNECTED TO: ' + SOCKET.HOST + ':' + SOCKET.PORT);
-//     // Write a message to the socket as soon as the client is connected, the server will receive it as message from the client 
-//     //client.write('I am Chuck Norris!');
-// });
+var client = new net.Socket();
+client.connect(SOCKET.PORT, SOCKET.HOST, function() {
+    console.log('CONNECTED TO: ' + SOCKET.HOST + ':' + SOCKET.PORT);
+    // Write a message to the socket as soon as the client is connected, the server will receive it as message from the client 
+    //client.write('I am Chuck Norris!');
+});
 
-// // Add a 'data' event handler for the client socket
-// // data is what the server sent to this socket
-// client.on('data', function(data) {
+// Add a 'data' event handler for the client socket
+// data is what the server sent to this socket
+client.on('data', function(data) {
     
-//   console.log('DATA: ' + data);
-//   // Close the client socket completely
-//   // client.destroy();
+  console.log('DATA: ' + data);
+  // Close the client socket completely
+  // client.destroy();
 
-// });
+});
 
 
-// // Test
+// Test
 
-// process.stdin.resume();
-// process.stdin.setEncoding('utf8');
+process.stdin.resume();
+process.stdin.setEncoding('utf8');
 
-// process.stdin.on('data', function (chunk) {
-//   process.stdout.write('data: ' + chunk);
-//   client.write(chunk);
-// });
+process.stdin.on('data', function (chunk) {
+  process.stdout.write('data: ' + chunk);
+  client.write(chunk);
+});
 
-// process.stdin.on('end', function () {
-//   process.stdout.write('end');
-// });
+process.stdin.on('end', function () {
+  process.stdout.write('end');
+});
 
-// // Add a 'close' event handler for the client socket
-// client.on('close', function() {
-//     console.log('Connection closed');
-// });
+// Add a 'close' event handler for the client socket
+client.on('close', function() {
+    console.log('Connection closed');
+});
 
