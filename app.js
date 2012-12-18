@@ -26,9 +26,9 @@ app.configure(function(){
 
 });
 
-var ws = 'http://127.0.0.1:3000';
+//var ws = 'http://127.0.0.1:3000';
+var ws = 'http://rinker.kr:3000';
 
-//var ws = 'http://rinker.kr:3000';
 app.configure('development', function(){
   app.use(express.errorHandler());
 });
