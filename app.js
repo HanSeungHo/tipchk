@@ -71,12 +71,6 @@ var http = http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 
-
-
-// TCP Socket Network
-// var client = new Array();
-
-var net = require('net');
 var io = require('socket.io').listen(http);
 
 // Debug level
@@ -191,44 +185,5 @@ var game = io.of('/game').on('connection', function(socket) {
   });
 
 
-});
-
-// Socket.io
-
-var client = new net.Socket();
-client.connect(SOCKET.PORT, SOCKET.HOST, function() {
-    console.log('CONNECTED TO: ' + SOCKET.HOST + ':' + SOCKET.PORT);
-    // Write a message to the socket as soon as the client is connected, the server will receive it as message from the client 
-    //client.write('I am Chuck Norris!');
-});
-
-// Add a 'data' event handler for the client socket
-// data is what the server sent to this socket
-  client.on('data', function(data) {
-    
-  console.log('DATA: ' + data);
-  // Close the client socket completely
-  // client.destroy();
-
-});
-
-
-// Console Test
-
-process.stdin.resume();
-process.stdin.setEncoding('utf8');
-
-process.stdin.on('data', function (chunk) {
-  process.stdout.write('data: ' + chunk);
-  client.write(chunk);
-});
-
-process.stdin.on('end', function () {
-  process.stdout.write('end');
-});
-
-// Add a 'close' event handler for the client socket
-client.on('close', function() {
-    console.log('Connection closed');
 });
 
