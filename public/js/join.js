@@ -1,5 +1,6 @@
 $(function() {
-
+	$.mobile.ajaxEnabled=false;
+	
 	var login = io.connect();
 
 	login.on(('user', function(user) {
