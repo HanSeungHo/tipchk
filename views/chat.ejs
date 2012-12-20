@@ -14,58 +14,58 @@
 
 
   <script>
-    var user = <%= user %>;
-      $(function() {
-          // create socket to realtime chat server
-          var socket = io.connect('<%= ws %>/chat');
-        
-          // successfully registered our name with the chat server
-          socket.on('ready', function() {
-            // change name field to message field and display send button
-            $('#message').val('').attr('placeholder', '대화 내용을 입력하세요.');
-            $('#btn-send').show();
-          });
-        
-          // received a message from another client
-          socket.on('message', function(data) {
-            // create styling for received message and show in window
-            var wrapper = $("<p>").addClass("other");
-            var body    = $("<span>").text(data.message.message).addClass("block");
-            var author  = $("<small>").text(data.from);
-            wrapper.append(body).append(author).slideUp();
-            $("#content_wrapper").append(wrapper);
-          });
-        
-          // send a new chat message to the server
-          $('#btn-send').on('click', function() {
-            // grab message, don't do anything if empty
-            var message = $("#message").val();
-            if(!message)
-              return false;
-                        
-            // create styling for own post and show in window
-            var wrapper = $("<p>").addClass("self");
-            var body    = $("<span>").text(message).addClass("block");
-            var author  = $("<small>").text("me");
-            wrapper = wrapper.append(body).append(author);
-            $("#content_wrapper").append(wrapper);
-            
-            // send chat message to server and clear input
-            socket.emit('message', { message: message,  });
-            $('#message').val('');
-          });
+    var user = '<%= user %>';
+    $(function() {
+        // create socket to realtime chat server
+        var socket = io.connect('<%= ws %>/chat');
+      
+        // successfully registered our name with the chat server
+        socket.on('ready', function() {
+          // change name field to message field and display send button
+          $('#message').val('').attr('placeholder', '대화 내용을 입력하세요.');
+          $('#btn-send').show();
+        });
+      
+        // received a message from another client
+        socket.on('message', function(data) {
+          // create styling for received message and show in window
+          var wrapper = $("<p>").addClass("other");
+          var body    = $("<span>").text(data.message.message).addClass("block");
+          var author  = $("<small>").text(data.from);
+          wrapper.append(body).append(author).slideUp();
+          $("#content_wrapper").append(wrapper);
+        });
+      
+        // send a new chat message to the server
+        $('#btn-send').on('click', function() {
+          // grab message, don't do anything if empty
+          var message = $("#message").val();
+          if(!message)
+            return false;
+                      
+          // create styling for own post and show in window
+          var wrapper = $("<p>").addClass("self");
+          var body    = $("<span>").text(message).addClass("block");
+          var author  = $("<small>").text("me");
+          wrapper = wrapper.append(body).append(author);
+          $("#content_wrapper").append(wrapper);
           
-          $("#message").keypress(function(event) {
-            // if enter was pressed, send message instead of line breaking
-            if(event.keyCode == 13)
-            {
-                event.preventDefault();
-                $("#btn-send").click();
-            }
-          });
-          
-          // hide the send button initially to resolve a jQueryMobile quirk
-          $("#btn-send").hide();
+          // send chat message to server and clear input
+          socket.emit('message', { message: message, user:user });
+          $('#message').val('');
+        });
+        
+        $("#message").keypress(function(event) {
+          // if enter was pressed, send message instead of line breaking
+          if(event.keyCode == 13)
+          {
+              event.preventDefault();
+              $("#btn-send").click();
+          }
+        });
+        
+        // hide the send button initially to resolve a jQueryMobile quirk
+        $("#btn-send").hide();
       });
     </script>
     <style type="text/css">

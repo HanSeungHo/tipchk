@@ -141,7 +141,7 @@ var chat = io.of('/chat').on('connection', function(socket) {
     socket.get('name', function(error, name) {
       // send message to all chat participants
       socket.broadcast.emit('message', { 
-        from: data.user,
+        user: data.user,
         message: data.message 
       });
     });
