@@ -6,7 +6,7 @@ var ARGV = {
 
 var SERVER = {
   PORT: 3000,
-  WS : 'http://rinker.kr:3000';
+  WS : 'http://rinker.kr:3000'
 }
 
 // Console setting
