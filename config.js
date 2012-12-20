@@ -23,9 +23,9 @@ process.argv.forEach(function (val, index, array) {
     ARGV = SERVER;
     console.log('-- SERVER SETTING --\n', ARGV);
   }else if(val == '-h') {
-    console.log('-- Tipchk HELP --');
+    console.log('-- TipChk HELP --');
     process.exit();
   }
 });
-
+  
 exports.ARGV = ARGV;

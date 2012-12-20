@@ -30,8 +30,8 @@
         socket.on('message', function(data) {
           // create styling for received message and show in window
           var wrapper = $("<p>").addClass("other");
-          var body    = $("<span>").text(data.message.message).addClass("block");
-          var author  = $("<small>").text(data.from);
+          var body    = $("<span>").text(data.message).addClass("block");
+          var author  = $("<small>").text(data.user);
           wrapper.append(body).append(author).slideUp();
           $("#content_wrapper").append(wrapper);
         });
@@ -51,7 +51,7 @@
           $("#content_wrapper").append(wrapper);
           
           // send chat message to server and clear input
-          socket.emit('message', { message: message, user:user });
+          socket.emit('message', { message: message, user: user });
           $('#message').val('');
         });
         

@@ -9,6 +9,7 @@ $(function() {
 	})); 
 
 	$('#Login').on('click', function() {
+		
 		login.emit('login', $('#name').val());  
 	});
 
