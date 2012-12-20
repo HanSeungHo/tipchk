@@ -4,13 +4,14 @@
 */
 
 var express = require('express')
+  , CONFIG = require('./config')
   , http = require('http')
   , path = require('path');
 
 var app = express();
 
 app.configure(function(){
-  app.set('port', process.env.PORT || 3000);
+  app.set('port', CONFIG.ARGV.PORT );
   app.set('views', __dirname + '/views');
   app.set('view engine', 'ejs');
   app.use(express.favicon());
@@ -26,8 +27,7 @@ app.configure(function(){
 
 });
 
-//var ws = 'http://127.0.0.1:3000';
-var ws = 'http://rinker.kr:3000';
+var ws = CONFIG.ARGV.WS;
 
 app.configure('development', function(){
   app.use(express.errorHandler());
