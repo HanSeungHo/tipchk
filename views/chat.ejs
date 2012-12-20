@@ -14,6 +14,7 @@
 
 
   <script>
+    var user = <%= user %>;
       $(function() {
           // create socket to realtime chat server
           var socket = io.connect('<%= ws %>/chat');
@@ -50,7 +51,7 @@
             $("#content_wrapper").append(wrapper);
             
             // send chat message to server and clear input
-            socket.emit('message', { message: message });
+            socket.emit('message', { message: message,  });
             $('#message').val('');
           });
           

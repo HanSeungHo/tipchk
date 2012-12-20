@@ -39,7 +39,11 @@ app.get('/', function(req,res) {
 });
 
 app.get('/chat', function(req,res) {
-    res.render('chat', { title: 'Express', ws: ws });
+  if(app.session){
+    res.render('chat', { title: 'Express', ws: ws, user:app.session.user });
+  }else{
+    res.redirect('/');  
+  }  
 });
 
 
@@ -132,13 +136,13 @@ var chat = io.of('/chat').on('connection', function(socket) {
     });
 
   // client has sent a new change message
-  socket.on('message', function(message) {
+  socket.on('message', function(data) {
     // get name associated with this socket
     socket.get('name', function(error, name) {
       // send message to all chat participants
       socket.broadcast.emit('message', { 
-        from: app.session.user,
-        message: message 
+        from: data.user,
+        message: data.message 
       });
     });
   });
